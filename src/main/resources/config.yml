@@ -1,0 +1,7 @@
+# How often in ticks to check for blocks that should be removed
+timer-interval: 20
+
+# A material -> seconds map for the resetting times
+reset-times:
+  obsidian: 60
+  end_crystal: 60

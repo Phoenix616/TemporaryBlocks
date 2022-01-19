@@ -1,0 +1,12 @@
+name: TemporaryBlocks
+version: '${minecraft.plugin.version}'
+main: de.themoep.temporaryblocks.TemporaryBlocks
+api-version: 1.13
+authors: [Phoenix616]
+website: "https://github.com/Phoenix616/TemporaryBlocks"
+commands:
+  temporaryblocks:
+    description: View and reload the config
+    aliases: [tempblocks, tb]
+    permission: temporaryblocks.command
+    usage: /<command> [list|reload
