@@ -98,7 +98,7 @@ public final class TemporaryBlocks extends JavaPlugin implements Listener {
                 QueueEntry entry;
                 while ((entry = removeQueue.peek()) != null) {
                     if (entry.removeAt <= System.currentTimeMillis()) {
-                        if (entry.location.getWorld() != null) {
+                        if (entry.location != null && entry.location.getWorld() != null) {
                             if (entry.location.isChunkLoaded()) {
                                 entry.removeBlockFromWorld();
                             } else {
@@ -376,7 +376,7 @@ public final class TemporaryBlocks extends JavaPlugin implements Listener {
     }
 
     private static class QueueEntry {
-        private Location location;
+        private final Location location;
         private final long removeAt;
         private final Material type;
 
@@ -408,9 +408,11 @@ public final class TemporaryBlocks extends JavaPlugin implements Listener {
         public static QueueEntry deserialize(Map<?, ?> map) {
             if (map.containsKey("location") && map.containsKey("removeAt") && map.containsKey("type")) {
                 Location location = (Location) map.get("location");
-                long removeAt = Long.parseLong(String.valueOf(map.get("removeAt")));
-                Material type = Material.valueOf((String) map.get("type"));
-                return new QueueEntry(location, removeAt, type);
+                if (location != null) {
+                    long removeAt = Long.parseLong(String.valueOf(map.get("removeAt")));
+                    Material type = Material.valueOf((String) map.get("type"));
+                    return new QueueEntry(location, removeAt, type);
+                }
             }
             throw new IllegalArgumentException("Invalid map for QueueEntry: " + map);
         }
